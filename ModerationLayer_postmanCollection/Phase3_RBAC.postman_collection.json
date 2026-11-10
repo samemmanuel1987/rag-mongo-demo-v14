@@ -1,0 +1,177 @@
+{
+  "info": {
+    "name": "Phase 03 - Authorization & RBAC",
+    "description": "RBAC validation for moderation.user, moderation.tester, and moderation.admin on the local guardrail gateway.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "phase-03-rbac-collection"
+  },
+  "item": [
+    {
+      "name": "01 - Missing Authorization (401)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"hello world\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/moderate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "moderate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 - Valid User Token Allowed (200)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"hello world\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/moderate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "moderate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 - Tester Token on Moderation Route (403)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{testerToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"hello world\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/moderate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "moderate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 - User Token on Admin Route (403)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/policy",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "admin",
+            "policy"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 - Admin Token on Admin Route (200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/policy",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "admin",
+            "policy"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 - Invalid Token (401)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer not-a-real-token"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/policy",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "admin",
+            "policy"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

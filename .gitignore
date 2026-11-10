@@ -1,0 +1,17 @@
+node_modules/
+client/node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.*
+venv/
+.venv/
+.pytest_cache/
+coverage/
+dist/
+.DS_Store
+uploads/
+client/build/
+server/logs/
+ModerationLayer_postmanCollection/*.postman_environment.json

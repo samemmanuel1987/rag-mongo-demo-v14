@@ -1,0 +1,377 @@
+/* ============================================
+   RAG Pipeline - Modern Design System
+   ============================================ */
+
+:root {
+  /* Core palette */
+  --primary-50: #FFF5F3;
+  --primary-100: #FFE6E2;
+  --primary-200: #FFC4BC;
+  --primary-500: #FF7360;
+  --primary-600: #FF4F38;
+  --primary-700: #E03E27;
+
+  --accent-cyan: #0EA5E9;
+  --accent-pink: #EC4899;
+  --accent-amber: #F59E0B;
+  --accent-emerald: #10B981;
+
+  --surface-light: #F1F5F9;
+  --surface-dark: #0B0F19;
+
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Border radius - ultra modern smooth curves & pill shapes */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+
+  /* Glow shadows */
+  --glow-primary: 0 8px 25px -4px rgba(79, 70, 229, 0.45);
+  --glow-secondary: 0 8px 25px -4px rgba(14, 165, 233, 0.45);
+  --glow-accent: 0 8px 25px -4px rgba(236, 72, 153, 0.45);
+  --glow-success: 0 8px 25px -4px rgba(16, 185, 129, 0.45);
+  --glow-search: 0 0 0 4px rgba(79, 70, 229, 0.18), 0 10px 30px rgba(79, 70, 229, 0.12);
+}
+
+/* ===== Global Reset & Base ===== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+/* ===== Custom Scrollbar ===== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+
+/* ===== Code / Monospace ===== */
+
+code, pre, .monospace {
+  font-family: var(--font-mono);
+}
+
+/* ===== Selection ===== */
+
+::selection {
+  background: var(--primary-200);
+  color: var(--primary-700);
+}
+
+/* ===== Focus ring ===== */
+
+:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* ===== Animations ===== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Glass morphism utility ===== */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ===== Button Hover Shine Utility ===== */
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 80%
+  );
+  transform: rotate(30deg) translateY(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-shine:hover::after {
+  transform: rotate(30deg) translateY(100%);
+}
+
+/* ============================================
+   Enhanced Animation Library (v2.1)
+   ============================================ */
+
+/* --- Animated gradient shift (for text & backgrounds) --- */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- Slow aurora drift for ambient page backgrounds --- */
+@keyframes auroraDrift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(3%, -4%, 0) scale(1.08); }
+  66% { transform: translate3d(-3%, 3%, 0) scale(0.96); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* --- Shimmer / skeleton loading sweep --- */
+@keyframes shimmer {
+  0% { background-position: -468px 0; }
+  100% { background-position: 468px 0; }
+}
+
+/* --- Floating (gentle up/down) --- */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* --- Glow pulse (for live/active accents) --- */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.45); }
+  50% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); }
+}
+
+/* --- Scale / pop in --- */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --- Slide up with fade (staggerable) --- */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Rotating conic border for "AI thinking" states --- */
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Bouncing loader dots --- */
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* --- Typing caret blink --- */
+@keyframes caretBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ===== Utility classes ===== */
+
+.animate-slide-up { animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-scale-in { animation: scaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-glow { animation: glowPulse 2.2s ease-in-out infinite; }
+
+/* Stagger helper: apply to children wrappers */
+.stagger > * { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.stagger > *:nth-child(1) { animation-delay: 0.04s; }
+.stagger > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger > *:nth-child(3) { animation-delay: 0.16s; }
+.stagger > *:nth-child(4) { animation-delay: 0.22s; }
+.stagger > *:nth-child(5) { animation-delay: 0.28s; }
+.stagger > *:nth-child(6) { animation-delay: 0.34s; }
+.stagger > *:nth-child(7) { animation-delay: 0.40s; }
+.stagger > *:nth-child(8) { animation-delay: 0.46s; }
+
+/* Animated multicolor gradient text */
+.gradient-text-animated {
+  background: linear-gradient(90deg, #4F46E5, #0EA5E9, #EC4899, #4F46E5);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+
+/* Ambient aurora blobs (place inside a position:relative container) */
+.aurora-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora-bg::before,
+.aurora-bg::after {
+  content: '';
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: auroraDrift 18s ease-in-out infinite;
+}
+.aurora-bg::before {
+  top: -12%;
+  left: -8%;
+  background: radial-gradient(circle at center, #6366F1, transparent 70%);
+}
+.aurora-bg::after {
+  bottom: -18%;
+  right: -10%;
+  background: radial-gradient(circle at center, #EC4899, transparent 70%);
+  animation-delay: -9s;
+  animation-duration: 22s;
+}
+[data-theme="dark"] .aurora-bg::before,
+[data-theme="dark"] .aurora-bg::after { opacity: 0.22; }
+
+/* Skeleton shimmer block */
+.shimmer {
+  background: linear-gradient(90deg, rgba(148,163,184,0.10) 25%, rgba(148,163,184,0.22) 50%, rgba(148,163,184,0.10) 75%);
+  background-size: 936px 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: var(--radius-md);
+}
+
+/* Bouncing dots loader */
+.dots-loader { display: inline-flex; align-items: center; gap: 5px; }
+.dots-loader span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor;
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+.dots-loader span:nth-child(2) { animation-delay: 0.16s; }
+.dots-loader span:nth-child(3) { animation-delay: 0.32s; }
+
+/* Conic "AI thinking" ring wrapper.
+   Border-radius must match the large button inside it (28px per the MUI
+   theme's sizeLarge override), otherwise the ring's corners are squarer
+   than the button's rounded corners and the rotating gradient appears to
+   "jump"/glitch at the corners. */
+.ai-ring {
+  position: relative;
+  border-radius: 28px;
+}
+.ai-ring::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from 0deg, #4F46E5, #0EA5E9, #EC4899, #4F46E5);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spinSlow 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Typing caret for animated query text */
+.typing-caret::after {
+  content: '|';
+  margin-left: 2px;
+  animation: caretBlink 1s step-end infinite;
+  color: var(--primary-600);
+  font-weight: 400;
+}
+
+/* Interactive chip lift */
+.chip-interactive {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+}
+.chip-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

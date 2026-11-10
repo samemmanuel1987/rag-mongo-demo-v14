@@ -1,0 +1,58 @@
+/* App-level utilities */
+
+/* Page header pattern */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover lift */
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Pulse dot for live indicators */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Status colors */
+.status-success { color: #10B981; }
+.status-warning { color: #F59E0B; }
+.status-error { color: #EF4444; }
+.status-info { color: #3B82F6; }
+
+/* Monospace code blocks */
+.code-block {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+[data-theme="dark"] .code-block {
+  background: #1E293B;
+  border-color: #334155;
+}
